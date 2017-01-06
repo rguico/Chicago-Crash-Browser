@@ -5,7 +5,7 @@ var editableLayers;
 function startDrawing() {
 	editableLayers = new L.FeatureGroup();
 	map.addLayer(editableLayers);
-	
+
 	// Initialise the draw control and pass it the FeatureGroup of editable layers
 	var drawControlFull = new L.Control.Draw({
 	    edit: {
@@ -25,7 +25,7 @@ function startDrawing() {
 			marker: false,
 	    }
 	});
-	
+
 	var drawControlEh = new L.Control.Draw({
 				draw: {
 					featureGroup: editableLayers,
@@ -66,23 +66,23 @@ function startDrawing() {
 	    draw: false
 	});
 	map.addControl(drawControlFull);
-	
+
 	map.on("draw:created", function (e) {
 	    var layer = e.layer, type = e.layerType;
 	    layer.addTo(editableLayers);
 	    drawControlFull.removeFrom(map);
 	    drawControlEditOnly.addTo(map)
-	    
+
 	    getGeoJson(true, 0, type); // custom
 	});
-	
+
 	map.on("draw:deleted", function(e) {
 	    drawControlEditOnly.removeFrom(map);
 	    drawControlFull.addTo(map);
-	    
+
 	    //getGeoJson(true, 1); // custom
 	});
-	
+
 	map.on('draw:edited', function (e) {
 		//$("#save_shape").removeClass("hidden");
 		getGeoJson(true, 1);
@@ -94,9 +94,9 @@ function getGeoJson(saveToDb, wasItEdited, type) {
 	var output = JSON.stringify(editableLayers.toGeoJSON());
 	$("#map_output").html(output);
 	console.log(output);
-	
+
 	disArray(output, "map_output");
-	
+
 	if(saveToDb === true) {
 		submitGeoJson(output, wasItEdited, type);
 	}
@@ -107,16 +107,16 @@ function submitGeoJson(featureCollection, wasItEdited, type) {
 	var baseUrl = "php/boundaries.api.php"; // this is relative to the containing file, places.php
 	$("#results .status").show().html("Searching in here...");
 	$("#results .replaceme").hide();
-	
+
 	var json = disArray(featureCollection,false);
-	
+
 	$.post( baseUrl, { json: json, edited: wasItEdited, type: type } )
-		.done(function( data ) {
+		.then(function( data ) {
 			console.log( "submitGeoJson: Data Loaded: " + data );
 			$("#results ul").append(data);
 			$("#results .status").hide();
 		})
-		.fail(function(data) {
+		.catch(function(data) {
 			console.log("submitGeoJson: Data didn't load");
 		});
 }
@@ -124,27 +124,27 @@ function submitGeoJson(featureCollection, wasItEdited, type) {
 function disArray(featureCollection, div) {
 	console.log("disArray running");
 	//console.log(featureCollection);
-	
+
 	var fc = JSON.parse(featureCollection);
 	//console.log(fc);
 	var r ="";
-	
+
 	$.each(fc.features, function(i, v) {
 		console.log(v.geometry);
-		
+
 		if(div != false) {
 			$("#" + div).append("<p>" + JSON.stringify(v.geometry) + "</p>");
 		}
 		r += JSON.stringify(v.geometry); // return all
 		r = JSON.stringify(v.geometry); // return the most recently drawn shape
 	});
-	
+
 	return r;
 }
 
 function showNameForm() {
 	$("#save_temp_shape").removeClass("hidden"); // show the form
-	
+
 	$( "#save_temp_shape" ).submit(function( event ) {
 		var gid = $("input[name='gid']").val();
 		var email = $("input[name='email']").val();
@@ -157,16 +157,16 @@ function showNameForm() {
 
 function savePermanently(gid, email, shape_name, make_private) {
 	var baseUrl = "php/boundaries.api.php"; // this is relative to the containing file, places.php
-	
+
 	$.post( baseUrl, { gid: gid, username: email, shape_name: shape_name, private: make_private } )
-		.done(function( data ) {
+		.then(function( data ) {
 			console.log( "savePermanently: Data Loaded: " + data );
 			$("#save_temp_shape").addClass("hidden"); // hide the form
 			$(".placeHeading").html(shape_name);
 			$("#temporary_explainer").html("<span class='label label-success'>Saved!</span> Your Place was saved permanently with the name \""+shape_name+"\" - <a href='account.php'>My Places</a>");
 			//$("#results ul").append(data);
 		})
-		.fail(function(data) {
+		.catch(function(data) {
 			console.log("savePermanently: Data didn't load" + data);
 		});
 }

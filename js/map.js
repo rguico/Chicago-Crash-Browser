@@ -1,7 +1,7 @@
 /* global define, L */
 'use strict';
 
-define(['util', 'jquery'], function (Utility, $) {
+define(['ccb.util', 'jquery'], function (Utility, $) {
     var lat;
     var lng;
     var map;
@@ -326,16 +326,16 @@ define(['util', 'jquery'], function (Utility, $) {
     init();
 
     return {
-        getAPIUrl: getAPIUrl,
-        getAPIUrlForPoly: getAPIUrlForPoly,
-        clearAreas: clearAreas,
-        addCircle: addCircle,
-        addPoly: addPoly,
+        getAPIUrl,
+        getAPIUrlForPoly,
+        clearAreas,
+        addCircle,
+        addPoly,
         closePopup: map.closePopup,
-        finalizeMarkerGroup: finalizeMarkerGroup,
-        addFeatureToMap: addFeatureToMap,
-        getMetaData: getMetaData,
-        setCoordinates: setCoordinates,
-        setPoly: setPoly
+        finalizeMarkerGroup,
+        addFeatureToMap,
+        getMetaData,
+        setCoordinates,
+        setPoly
     };
 });

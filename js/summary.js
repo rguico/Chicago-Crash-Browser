@@ -1,7 +1,9 @@
 /* global define */
 'use strict';
 
-define(['util', 'jquery'], function (Utility, $) {
+import Highcharts from 'highcharts/highcharts.src.js';
+
+define(['ccb.util', 'jquery', ], function (Utility, $) {
   /**
   *   Issue #28: Since some crashes may not have any injuries, we need a helper function
   *   that catches this condition and returns 0 instead.
@@ -57,7 +59,7 @@ define(['util', 'jquery'], function (Utility, $) {
       //
       // Output the summary graph (# of total pedestrian injuries, # of total bicycle injuries, total as encap if possible)
       //
-      $('#summaryGraph').highcharts({
+      Highcharts.chart('summaryGraph', {
           chart: {
               type: 'bar'
           },
@@ -146,7 +148,7 @@ define(['util', 'jquery'], function (Utility, $) {
           bikeInjuryArr.push(injuryObject.bikeInjuries);
       });
 
-      $('#breakdownGraph').highcharts({
+      Highcharts.chart('breakdownGraph', {
           chart: {
               type: 'bar'
           },

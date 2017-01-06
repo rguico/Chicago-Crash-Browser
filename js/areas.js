@@ -47,10 +47,10 @@ define(['jquery', 'lodash', 'map'], function ($, _, map) {
   }
 
   function getAreas(area) {
-    return _.sortBy(_.map(_.filter(areas, {type: area}), function (area) {
+    return _.sortBy(_.map(_.filter(areas, {type: area}), function ({slug, name}) {
       return {
-        id: area.slug,
-        text: area.name
+        id: slug,
+        text: name
       }
     }), 'text');
   }

@@ -2,27 +2,25 @@
 /* global Rhaboo,require,define */
 'use strict';
 
-require('rhaboo');
+import * as Cookies from 'js-cookie';
+import $ from 'jquery';
 
 require('jquery-ui/ui/core');
 require('jquery-ui/ui/widget');
 require('jquery-ui/ui/position');
-require('jquery-ui/ui/menu');
-require('jquery-ui/ui/autocomplete');
-require('jquery-cookie/jquery.cookie');
+require('jquery-ui/ui/widgets/menu');
+require('jquery-ui/ui/widgets/autocomplete');
 
 require('select2');
 
-require('leaflet-dist/leaflet-src');
-require('leaflet.markerclusterer');
-require('leaflet-locatecontrol/src/L.Control.Locate');
+require('leaflet');
+require('leaflet-markercluster');
+require('leaflet.locatecontrol');
 require('leaflet-plugins/control/Permalink');
-require('leaflet.draw');
+require('leaflet-draw');
 require('bootstrap');
-require('highcharts/highcharts');
 
-define(['util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utility, crashes, map, summary, areas, $) {
-    var store = Rhaboo.persistent('crashBrowser');
+define(['ccb.util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utility, crashes, map, summary, areas, $) {
     var addresses = [];
 
     /*
@@ -38,13 +36,13 @@ define(['util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utili
                 city: 'Chicago',
                 state: 'IL',
                 format: 'json'
-            }, function(data) {
+            }).then(data => {
                 if (data.length > 0 && !!data[0].lat && !!data[0].lon) {
                     dfd.resolve(data);
                 } else {
                     dfd.reject();
                 }
-            }).fail(function() {
+            }).catch(() => {
                 dfd.reject();
             });
         }
@@ -65,26 +63,27 @@ define(['util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utili
 
     var saveAddressAndShowCrashes = function() {
         var searchAddress = $('#address').val();
-        $.when( fetchCoordsForAddress() ).then(
-        function(data) {
-            if (addresses.indexOf(searchAddress) === -1) {
-                addresses.push(searchAddress);
-                if (addresses.length > 15) {
-                    addresses.shift();
+        $.when( fetchCoordsForAddress() )
+            .then(data => {
+                if (addresses.indexOf(searchAddress) === -1) {
+                    addresses.push(searchAddress);
+                    if (addresses.length > 15) {
+                        addresses.shift();
+                    }
+                    localStorage.setItem('ccb.addresses', JSON.stringify(addresses));
                 }
-                store.write('addresses', addresses);
-            }
-            map.setCoordinates(data[0].lat, data[0].lon);
-            $('body').trigger('search');
-        }, function() {
-            var badIdx = addresses.indexOf(searchAddress);
-            if (badIdx !== -1) {
-                addresses.splice(badIdx, 1);
-                store.write('addresses', addresses);
-            }
-            addressError();
-            map.closePopup();
-        });
+                map.setCoordinates(data[0].lat, data[0].lon);
+                $('body').trigger('search');
+            })
+            .catch(() => {
+                var badIdx = addresses.indexOf(searchAddress);
+                if (badIdx !== -1) {
+                    addresses.splice(badIdx, 1);
+                    localStorage.setItem('ccb.addresses', JSON.stringify(addresses));
+                }
+                addressError();
+                map.closePopup();
+            });
     };
 
     var addressError = function() {
@@ -96,34 +95,34 @@ define(['util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utili
     */
     var init = function() {
         // When there isn't a display cookie, default to graph.
-        if ($.cookie('display') === undefined) {
+        if (Cookies.get('display') === undefined) {
             $('#outputGraph').prop('checked', true).parent().addClass('active');
-            $.cookie('display', 'graph');
+            Cookies.set('display', 'graph');
         } else {
 
-            if ($.cookie('display') == 'graph') {
+            if (Cookies.get('display') == 'graph') {
                 $('#outputGraph').prop('checked', true).parent().addClass('active');
                 summary.showGraph();
             }
 
-            if ($.cookie('display') == 'text') {
+            if (Cookies.get('display') == 'text') {
                 $('#outputText').prop('checked', true).parent().addClass('active');
                 summary.showText();
             }
         }
 
         // When there isn't a searchRadius cookie, default to 150.
-        if ($.cookie('searchRadius') === undefined) {
+        if (Cookies.get('searchRadius') === undefined) {
             $('input[name="searchRadius"][value="150"]').prop('checked', true).parent().addClass('active');
-            $.cookie('searchRadius', '150');
+            Cookies.set('searchRadius', '150');
         } else {
-            var searchRadius = $.cookie('searchRadius');
+            var searchRadius = Cookies.get('searchRadius');
             $('input[name="searchRadius"][value="' + searchRadius + '"]').prop('checked', true).parent().addClass('active');
         }
 
         // Load stored addresses
-        if (store.addresses) {
-            setAddresses(store.addresses);
+        if (localStorage.getItem('ccb.addresses')) {
+            setAddresses(JSON.parse(localStorage.getItem('ccb.addresses')));
         }
 
         $('body').on('search', function (event, opts) {
@@ -133,7 +132,7 @@ define(['util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utili
             map.clearAreas();
             crashes
                 .getCrashes(opts)
-                .done(function () {
+                .then(() => {
                     if (opts.areaType === 'polygon') {
                         map.addPoly();
                     } else {
@@ -141,7 +140,7 @@ define(['util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utili
                     }
                     map.finalizeMarkerGroup();
                 })
-                .fail(function () {
+                .catch(() => {
                     $('#status').html('Something went wrong while retrieving data. Please try again later and alert Steven.');
                     map.closePopup();
                 });
@@ -150,7 +149,7 @@ define(['util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utili
         $('input[name="searchRadius"]:radio').change(function() {
             var searchRadiusValue = $('input[name="searchRadius"]:checked').val();
             $('#searchRadiusButtons label input').removeClass('active');
-            $.cookie('searchRadius', searchRadiusValue);
+            Cookies.set('searchRadius', searchRadiusValue);
             $('body').trigger('search');
         });
 
@@ -158,7 +157,7 @@ define(['util', 'crashes', 'map', 'summary', 'areas', 'jquery'], function (Utili
             var outputTypeCheckedValue = $('input[name="outputType"]:checked').val();
             $('#displaySelection label input').removeClass('active');
             $('input[name="outputType"]:checked').addClass('active');
-            $.cookie('display', outputTypeCheckedValue);
+            Cookies.set('display', outputTypeCheckedValue);
             if (outputTypeCheckedValue == 'graph') {
                 summary.showGraph();
             } else if (outputTypeCheckedValue == 'text') {

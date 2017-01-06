@@ -52,8 +52,10 @@ gulp.task('default', ['clean', 'css', 'images'], function () {
     .pipe(gulp.dest(outputFolder));
 });
 
-gulp.task('clean', function () {
-  return del([outputFolder]);
+gulp.task('clean', () => {
+  return del([outputFolder]).then(paths => {
+    console.log('Deleted files and folders:\n', paths.join('\n'));
+  });
 });
 
 gulp.task('serve', ['clean', 'default'], function () {
@@ -76,6 +78,16 @@ gulp.task('deploy', ['default', 'replaceProd'], function () {
     dest: secrets.username + '@' + secrets.hostname + ':/var/www/chicagocrashes/htdocs',
     options: '-rvhcz --delete --progress'
   }, function (err) {
+    console.error(err);
+  });
+});
+
+gulp.task('deploy-beta', ['default', 'replaceProd'], () => {
+  rsync({
+    src: outputFolder + '/',
+    dest: secrets.username + '@' + secrets.hostname + ':/var/www/chicagocrashes/htdocs/beta',
+    options: '-rvhcz --delete --progress'
+  }, err => {
     console.error(err);
   });
 });

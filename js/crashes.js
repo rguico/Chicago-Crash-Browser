@@ -1,7 +1,7 @@
 /* global define */
 'use strict';
 
-define(['util', 'map', 'summary', 'jquery'], function (Utility, map, s, $) {
+define(['ccb.util', 'map', 'summary', 'jquery'], function (Utility, map, s, $) {
   var summary;
 
   /*
@@ -41,7 +41,7 @@ define(['util', 'map', 'summary', 'jquery'], function (Utility, map, s, $) {
 
   var fetchCrashes = function fetchCrashes(options) {
     return fetchRawCrashData(options)
-      .done(function (data) {
+      .then(data => {
         generateSummaries(data.crashes);
       });
   };
