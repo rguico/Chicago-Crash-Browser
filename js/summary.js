@@ -2,14 +2,15 @@
 'use strict';
 
 import Highcharts from 'highcharts/highcharts.src.js';
+import * as Utility from 'ccb.util';
+import $ from 'jquery';
 
-define(['ccb.util', 'jquery', ], function (Utility, $) {
   /**
   *   Issue #28: Since some crashes may not have any injuries, we need a helper function
   *   that catches this condition and returns 0 instead.
   */
 
-  var injuryFigure = function(injuries) {
+  var injuryFigure = function injuryFigure(injuries) {
       if (injuries === undefined) {
           return 0;
       } else {
@@ -20,7 +21,7 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
   /**
   *   Outputs the textual representation of crashes located in a given distance.
   */
-  var outputCrashDataText = function(bikeOutputObj, pedOutputObj) {
+  var outputCrashDataText = function outputCrashDataText(bikeOutputObj, pedOutputObj) {
       $('#results').show();
 
       if (bikeOutputObj !== undefined) {
@@ -55,7 +56,7 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
   /*
   *   Output our crash data in two separate graphs.
   */
-  var outputCrashDataGraph = function(bikeOutputObj, pedOutputObj) {
+  var outputCrashDataGraph = function outputCrashDataGraph(bikeOutputObj, pedOutputObj) {
       //
       // Output the summary graph (# of total pedestrian injuries, # of total bicycle injuries, total as encap if possible)
       //
@@ -95,10 +96,10 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
               }
           },
           tooltip: {
-              formatter: function() {
-                  return '<b>'+ this.x +'</b><br/>'+
-                      this.series.name +': '+ this.y +'<br/>'+
-                      'Total: '+ this.point.stackTotal;
+              formatter: function formatter() {
+                  return `<b>${this.x}</b><br/>
+                      ${this.series.name}: ${this.y}<br/>
+                      Total: ${this.point.stackTotal}`;
               }
           },
           series:
@@ -177,7 +178,7 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
               series: {
                   stacking: 'normal',
                   dataLabels: {
-                      formatter: function() {
+                      formatter: function formatter() {
                           if (this.y === 0) {
                               return '';
                           } else {
@@ -191,10 +192,10 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
               }
           },
           tooltip: {
-              formatter: function() {
-                  return '<b>'+ this.x +'</b><br/>'+
-                      this.series.name +': '+ this.y +'<br/>'+
-                      'Total: '+ this.point.stackTotal;
+              formatter: function formatter() {
+                  return `<b>${this.x}</b><br/>
+                      ${this.series.name}: ${this.y}<br/>
+                      Total: ${this.point.stackTotal}`;
               }
           },
            series:
@@ -215,7 +216,7 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
   /*
   *   After showing graphs in the sidebar, resize to fit within viewport.
   */
-  var resizeGraphs = function() {
+  var resizeGraphs = function resizeGraphs() {
       $('#summaryGraph').width($('#list').width()-15);
       $('#breakdownGraph').width($('#list').width()-15);
   };
@@ -223,7 +224,7 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
   /*
   *   Toggles showing the graph.
   */
-  var showGraph = function() {
+  var showGraph = function showGraph() {
       $('#counterTotals').hide();
       $('#graphs').show();
       resizeGraphs();
@@ -232,13 +233,13 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
   /**
   *   Toggles showing text.
   */
-  var showText = function() {
+  var showText = function showText() {
       $('#counterTotals').show();
       $('#graphs').hide();
       resizeGraphs();
   };
 
-  var populateMetaData = function(metaDataObj) {
+  var populateMetaData = function populateMetaData(metaDataObj) {
       $('#radius').html(Utility.getDistance());
       $('#coords').html(metaDataObj.lat+', '+metaDataObj.lng);
       $('#latitude').html(metaDataObj.lat);
@@ -247,11 +248,10 @@ define(['ccb.util', 'jquery', ], function (Utility, $) {
       $('#metadata-link').show();
   };
 
-  return {
-      outputCrashDataGraph: outputCrashDataGraph,
-      outputCrashDataText: outputCrashDataText,
-      populateMetaData: populateMetaData,
-      showGraph: showGraph,
-      showText: showText
+  export {
+      outputCrashDataGraph,
+      outputCrashDataText,
+      populateMetaData,
+      showGraph,
+      showText
   };
-});

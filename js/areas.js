@@ -1,62 +1,63 @@
 /* global define, L */
 'use strict';
 
-define(['jquery', 'lodash', 'map'], function ($, _, map) {
-  var areas;
+import $ from 'jquery';
+import _ from 'lodash';
+import * as map from 'map';
 
-  function initDropdown() {
-    $.ajax('api/areas.json')
-      .then(function (response) {
-        areas = response;
-        data = [{
-          id: '',
-          text: 'None'
-        }, {
-          text: 'Neighborhood',
-          children: getAreas('neighborhood')
-        }, {
-          text: 'Community Area',
-          children: getAreas('communityarea')
-        }, {
-          text: 'Ward',
-          children: getAreas('ward')
-        }];
+var areas;
 
-        $('#areaSelector').select2({
-          data: data
-        });
+function initDropdown() {
+  $.ajax('api/areas.json')
+    .then(response => {
+      areas = response;
+      const data = [{
+        id: '',
+        text: 'None'
+      }, {
+        text: 'Neighborhood',
+        children: getAreas('neighborhood')
+      }, {
+        text: 'Community Area',
+        children: getAreas('communityarea')
+      }, {
+        text: 'Ward',
+        children: getAreas('ward')
+      }];
 
-        $('#areaSelector').on('select2:select', function (e) {
-          $.ajax('map.php', {
-              data: {
-                method: 'boundary',
-                place: e.params.data.id
-              }
-            }).then(function (geoJsonRaw) {
-              map.clearAreas();
-              map.setPoly(L.GeoJSON.geometryToLayer(geoJsonRaw.features[0]));
-              $('body').trigger('search', {
-                areaType: 'polygon'
-              });
-            });
-        });
-      })
-      .fail(function (err) {
-        console.error(err);
+      $('#areaSelector').select2({
+        data
       });
-  }
 
-  function getAreas(area) {
-    return _.sortBy(_.map(_.filter(areas, {type: area}), function ({slug, name}) {
-      return {
-        id: slug,
-        text: name
-      }
-    }), 'text');
-  }
+      $('#areaSelector').on('select2:select', e => {
+        $.ajax('map.php', {
+            data: {
+              method: 'boundary',
+              place: e.params.data.id
+            }
+          }).then(function (geoJsonRaw) {
+            map.clearAreas();
+            map.setPoly(L.GeoJSON.geometryToLayer(geoJsonRaw.features[0]));
+            $('body').trigger('search', {
+              areaType: 'polygon'
+            });
+          });
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
 
-  return {
-    initDropdown: initDropdown
-  };
+function getAreas(area) {
+  return _.sortBy(_.map(_.filter(areas, {type: area}), ({slug, name}) => {
+    return {
+      id: slug,
+      text: name
+    }
+  }), 'text');
+}
 
-});
+export {
+  initDropdown
+};
