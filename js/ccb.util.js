@@ -2,30 +2,30 @@ import $ from 'jquery';
 import URI from 'urijs';
 import _ from 'lodash';
 
-var params = {};
+const params = {};
 
-var uri = new URI(window.location.href);
+const uri = new URI(window.location.href);
 _.each(uri.fragment().split('&'), pair => {
-    var param = pair.split('=');
+    let param = pair.split('=');
     params[param[0]] = param[1];
 });
 
-var getParam = function getParam(param) {
-    return uri[param];
+const getParam = function getParam(param) {
+    return params[param];
 };
 
-var getDistance = function getDistance() {
+const getDistance = function getDistance() {
     return $('input[name="searchRadius"]:checked').val();
 };
 
 /**
  *  Return an Object sorted by it's Key; http://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
  */
-var sortObjectByKey = function sortObjectByKey(obj){
-    var keys = [];
-    var sorted_obj = {};
+const sortObjectByKey = function sortObjectByKey(obj){
+    const keys = [];
+    const sorted_obj = {};
 
-    for(var key in obj){
+    for(let key in obj){
         if(obj.hasOwnProperty(key)){
             keys.push(key);
         }
@@ -45,31 +45,19 @@ var sortObjectByKey = function sortObjectByKey(obj){
 /*
 *   Returns plural forms of common words.
 */
-var personOrPeople = function personOrPeople(quantity) {
-    var s;
-    if(quantity == 1) {
-        s = quantity + ' person';
-    } else if(quantity > 1) {
-        s = quantity + ' people';
-    }
-    return s;
+const personOrPeople = function personOrPeople(quantity) {
+    return quantity == 1 ? quantity + ' person' : quantity + ' people';
 };
 
-var crashOrCrashes = function crashOrCrashes(quantity) {
-    var s;
-    if(quantity == 1) {
-        s = quantity + ' crash';
-    } else if(quantity > 1) {
-        s = quantity + ' crashes';
-    }
-    return s;
+const crashOrCrashes = function crashOrCrashes(quantity) {
+    return quantity == 1 ? quantity + ' crash' : quantity + ' crashes';
 };
 
 /*
 *   Collision type enumerations. The variable type matters, because
 *   switch statements use === for comparisons.
 */
-var CollisionEnum = Object.freeze({
+const CollisionEnum = Object.freeze({
     PEDESTRIAN: 1,
     BICYCLIST: 2
 });
