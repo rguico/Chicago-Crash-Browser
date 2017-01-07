@@ -10,10 +10,8 @@ module.exports = {
   },
   resolve: {
       root: [
-        path.join(__dirname, 'bower_components'),
         path.join(__dirname, 'node_modules'),
-        path.join(__dirname, 'js'),
-        path.join(__dirname, 'js', 'lib')
+        path.join(__dirname, 'js')
       ]
   },
   plugins: [
