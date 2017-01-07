@@ -12,19 +12,20 @@ const outputFolder = 'dist';
 
 gulp.task('css', function () {
    return gulp.src([
-      'bower_components/leaflet-dist/leaflet.css',
-      'bower_components/leaflet.markerclusterer/dist/*.css',
-      'bower_components/leaflet-locatecontrol/src/*.css',
-      'bower_components/leaflet.draw/dist/*.css',
+      'node_modules/leaflet/dist/leaflet.css',
+      'node_modules/leaflet-markerclusterer/*.css',
+      'node_modules/leaflet-draw/dist/leaflet.draw.css',
       'node_modules/select2/dist/css/select2.min.css',
       'stylesheets/index.css']
     )
-    .pipe(concatCss('bundle.css'))
+    .pipe(concatCss('bundle.css', {
+      rebaseUrls: false
+    }))
     .pipe(gulp.dest(outputFolder));
 });
 
 gulp.task('images', ['clean'], function () {
-  return gulp.src('images/**/*')
+  return gulp.src(['node_modules/leaflet-draw/dist/images/*', 'images/**/*'])
     .pipe(gulp.dest(outputFolder + '/images'));
 });
 
@@ -33,8 +34,7 @@ gulp.task('default', ['clean', 'css', 'images'], function () {
   gulp.src('api/**/*')
     .pipe(gulp.dest(outputFolder + '/api'));
 
-  gulp.src(['bower_components/**/leaflet-locatecontrol/src/images/locate.png',
-    'bower_components/**/leaflet.draw/dist/images/spritesheet-2x.png'])
+  gulp.src(['node_modules/leaflet-draw/dist/images/spritesheet-2x.png'])
     .pipe(gulp.dest(outputFolder))
 
   gulp.src(['index.html',

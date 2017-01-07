@@ -20,7 +20,7 @@ define(['ccb.util', 'jquery'], function (Utility, $) {
         clickable:false
     };
 
-    var init = function() {
+    var init = function init() {
         var initLat = Utility.getParam('lat') || 41.895924;
         var initLng = Utility.getParam('lon') || -87.654921;
         setCoordinates(initLat, initLng);
@@ -38,7 +38,6 @@ define(['ccb.util', 'jquery'], function (Utility, $) {
 
         map = L.map('map').setView(center, 18);
         map.addControl(new L.Control.Permalink({useLocation:true}));
-        map.addControl(new L.control.locate({debug:false}));
         map.addControl(drawControl);
 
         /* TILE LAYERS */
@@ -74,7 +73,7 @@ define(['ccb.util', 'jquery'], function (Utility, $) {
 
         // Add the tile layers to an object
         var baseMaps = {'Streets': streets, 'Building Names': buildings, "Satellite": satellite};
-        satellite.addTo(map); // load "satellite" by default
+        streets.addTo(map); // load "satellite" by default
 
         // Create an empty object to which we might add data layers that can be toggled
         var otherLayers =  {};
@@ -134,10 +133,12 @@ define(['ccb.util', 'jquery'], function (Utility, $) {
             type = 'Bicycle Crash';
         }
 
-        return '<p><strong>' + type + '</strong></p><p>Case Number: ' + feature.casenumber + '<br/>Date: ' + feature.month + '/' + feature.day + '/' + (parseInt(feature.year) + 2000) + '<br/>' +
-        'Injuries: ' + feature.totalInjuries + '<br/>' +
-        'Fatalities: ' + feature.totalKilled + '<br/>' +
-        'Uninjured: ' + feature.noInjuries + '</p>';
+        return `<p><strong>${type}</strong></p>
+        <p>Case Number: ${feature.casenumber}<br/>
+        Date: ${feature.month}/${feature.day}/${(parseInt(feature.year) + 2000)}<br/>
+        Injuries: ${feature.totalInjuries}<br/>
+        Fatalities: ${feature.totalKilled}<br/>
+        Uninjured: ${feature.noInjuries}</p>`;
     };
 
     /*

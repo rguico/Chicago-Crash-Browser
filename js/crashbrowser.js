@@ -15,7 +15,6 @@ require('select2');
 
 require('leaflet');
 require('leaflet-markercluster');
-require('leaflet.locatecontrol');
 require('leaflet-plugins/control/Permalink');
 require('leaflet-draw');
 require('bootstrap');
