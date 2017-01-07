@@ -13,7 +13,8 @@ const outputFolder = 'dist';
 gulp.task('css', function () {
    return gulp.src([
       'node_modules/leaflet/dist/leaflet.css',
-      'node_modules/leaflet-markerclusterer/*.css',
+      'node_modules/leaflet.markercluster/dist/MarkerCluster.css',
+      'node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
       'node_modules/leaflet-draw/dist/leaflet.draw.css',
       'node_modules/select2/dist/css/select2.min.css',
       'stylesheets/index.css']

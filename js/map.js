@@ -5,26 +5,26 @@ import $ from 'jquery';
 import * as Utility from 'ccb.util';
 import L from 'leaflet';
 
-require('leaflet-markercluster');
-require('leaflet-plugins/control/Permalink');
-require('leaflet-draw');
+import 'leaflet.markercluster/dist/leaflet.markercluster-src.js';
+import 'leaflet-plugins/control/Permalink';
+import 'leaflet-draw';
 
-var lat;
-var lng;
-var map;
-var center;
-var circle;
-var poly;
-var markerGroup;
-var isDrawing = false;
-var API_HOST = '@@API_HOST';
+let lat;
+let lng;
+let map;
+let center;
+let circle;
+let poly;
+let markerGroup;
+let isDrawing = false;
+const API_HOST = '@@API_HOST';
 
 const shapeOptions = {
     color: 'red',
     fillColor: '#f03',
     fillOpacity: 0.3,
     stroke: false,
-    clickable:false
+    clickable: false
 };
 
 const init = function init() {
@@ -169,12 +169,13 @@ var clearAreas = function clearAreas() {
 var addCircle = function addCircle() {
     // this is in linear distance and it probably won't match the spheroid distance of the RADIANS database query
     var meters = Utility.getDistance() / 3.2808399;
-    circle = new  L.Circle([lat,lng], meters, shapeOptions);
+    shapeOptions['radius'] = meters;
+    circle = new L.Circle([lat,lng], shapeOptions);
     map.addLayer(circle);
     if (markerGroup.getLayers().length > 0) {
         map.fitBounds(markerGroup.getBounds());
     } else {
-        map.fitBounds(circle);
+        map.fitBounds(circle.getBounds());
     }
 };
 
@@ -186,7 +187,7 @@ var addPoly = function addPoly() {
     if (markerGroup.getLayers().length > 0) {
         map.fitBounds(markerGroup.getBounds());
     } else {
-        map.fitBounds(poly);
+        map.fitBounds(poly.getBounds());
     }
 };
 
@@ -216,7 +217,7 @@ var getAPIUrl = function getAPIUrl() {
     north = northeast.lat;
     east = northeast.lng;
 
-    return API_HOST + '/api.php?lat='+lat+'&lng='+lng+'&distance='+Utility.getDistance();
+    return `${API_HOST}/api.php?lat=${lat}&lng=${lng}&distance=${Utility.getDistance()}`;
 
 };
 
@@ -238,7 +239,7 @@ var getAPIUrlForPoly = function getAPIUrlForPoly() {
     var lastPoint = latLngs[0];
     coords += lastPoint.lng + ' ' + lastPoint.lat;
 
-    return API_HOST + '/api.php?coords=' + coords;
+    return `${API_HOST}/api.php?coords=${coords}`;
 };
 
 /**
@@ -259,7 +260,7 @@ var createFeatureMarker = function createFeatureMarker(feature) {
     }
 
     marker = new L.Marker(
-        [feature.latitude,feature.longitude],
+        [feature.latitude, feature.longitude],
         {icon: iconValue}
     );
 
@@ -285,35 +286,26 @@ var finalizeMarkerGroup = function finalizeMarkerGroup() {
     map.addLayer(markerGroup);
 };
 
-var bikeIcon = L.icon({
-    iconUrl: 'images/icon_bike.png',
+const iconDefaults = {
     shadowUrl: 'images/icon_shadow.png',
     iconSize: [32, 37],
     iconAnchor: [16, 38],
     shadowSize: [51, 37],
     shadowAnchor: [25, 38],
     popupAnchor: [0, -38],
-});
+};
 
-var pedestrianIcon = L.icon({
-    iconUrl: 'images/icon_pedestrian.png',
-    shadowUrl: 'images/icon_shadow.png',
-    iconSize: [32, 37],
-    iconAnchor: [16, 38],
-    shadowSize: [51, 37],
-    shadowAnchor: [25, 38],
-    popupAnchor: [0, -38],
-});
+var bikeIcon = L.icon(Object.assign({
+    iconUrl: 'images/icon_bike.png'
+}, iconDefaults));
 
-var otherIcon = L.icon({
-    iconUrl: 'images/icon_carcrash.png',
-    shadowUrl: 'images/icon_shadow.png',
-    iconSize: [32, 37],
-    iconAnchor: [16, 38],
-    shadowSize: [51, 37],
-    shadowAnchor: [25, 38],
-    popupAnchor: [0, -38],
-});
+var pedestrianIcon = L.icon(Object.assign({
+    iconUrl: 'images/icon_pedestrian.png'
+}, iconDefaults));
+
+var otherIcon = L.icon(Object.assign({
+    iconUrl: 'images/icon_carcrash.png'
+}, iconDefaults));
 
 
 /**

@@ -5,14 +5,14 @@
 import * as Cookies from 'js-cookie';
 import $ from 'jquery';
 
-require('jquery-ui/ui/core');
-require('jquery-ui/ui/widget');
-require('jquery-ui/ui/position');
-require('jquery-ui/ui/widgets/menu');
-require('jquery-ui/ui/widgets/autocomplete');
+import 'jquery-ui/ui/core';
+import 'jquery-ui/ui/widget';
+import 'jquery-ui/ui/position';
+import 'jquery-ui/ui/widgets/menu';
+import 'jquery-ui/ui/widgets/autocomplete';
 
-require('select2');
-require('bootstrap');
+import 'select2';
+import 'bootstrap';
 
 import * as Utility from 'ccb.util';
 import * as crashes from 'crashes';
