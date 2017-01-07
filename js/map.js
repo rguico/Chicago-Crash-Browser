@@ -313,8 +313,8 @@ var otherIcon = L.icon(Object.assign({
 */
 var getMetaData = function getMetaData() {
     return {
-        lat: lat,
-        lng: lng,
+        lat,
+        lng,
         dist: Utility.getDistance()
     };
 };

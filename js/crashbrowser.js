@@ -187,7 +187,7 @@ var init = function init() {
     });
 
     var get = Utility.getParam('get');
-    if(get === 'yes') {
+    if (get === 'yes') {
         $('body').trigger('search');
     }
 

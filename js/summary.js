@@ -10,7 +10,7 @@ import $ from 'jquery';
   *   that catches this condition and returns 0 instead.
   */
 
-  var injuryFigure = function injuryFigure(injuries) {
+  const injuryFigure = function injuryFigure(injuries) {
       if (injuries === undefined) {
           return 0;
       } else {
@@ -21,7 +21,7 @@ import $ from 'jquery';
   /**
   *   Outputs the textual representation of crashes located in a given distance.
   */
-  var outputCrashDataText = function outputCrashDataText(bikeOutputObj, pedOutputObj) {
+  const outputCrashDataText = function outputCrashDataText(bikeOutputObj, pedOutputObj) {
       $('#results').show();
 
       if (bikeOutputObj !== undefined) {
@@ -29,11 +29,11 @@ import $ from 'jquery';
           $('#counterBicyclistByYear').html('');
           $('#totalBicyclistInjuries').html(bikeOutputObj.totalInjuries);
 
-          var counterBicyclistByYear = Utility.sortObjectByKey(bikeOutputObj.crashesByYear);
-          $.each(counterBicyclistByYear, function(key, value){
-           $('#counterBicyclistByYear').append('<div>' + key + ': ' + Utility.crashOrCrashes(value) + ' with ' +
-               injuryFigure(Utility.personOrPeople(bikeOutputObj.injuriesByYear[key])) + ' injured & ' +
-               injuryFigure(Utility.personOrPeople(bikeOutputObj.noInjuriesByYear[key])) + ' uninjured</div>');
+          const counterBicyclistByYear = Utility.sortObjectByKey(bikeOutputObj.crashesByYear);
+          $.each(counterBicyclistByYear, (key, value) => {
+           $('#counterBicyclistByYear').append(`<div>${key}: ${Utility.crashOrCrashes(value)} with
+               ${injuryFigure(Utility.personOrPeople(bikeOutputObj.injuriesByYear[key]))} injured &
+               ${injuryFigure(Utility.personOrPeople(bikeOutputObj.noInjuriesByYear[key]))} uninjured</div>`);
           });
       }
 
@@ -42,12 +42,12 @@ import $ from 'jquery';
           $('#counterPedestrianByYear').html('');
           $('#totalPedestrianInjuries').html(pedOutputObj.totalInjuries);
 
-          var counterPedestrianByYear = Utility.sortObjectByKey(pedOutputObj.crashesByYear);
-          $.each(counterPedestrianByYear, function(key, value){
-           $('#counterPedestrianByYear').append('<div>' + key + ': ' + Utility.crashOrCrashes(value) + ' with ' +
-               injuryFigure(Utility.personOrPeople(pedOutputObj.injuriesByYear[key])) + ' injured & ' +
-               injuryFigure(Utility.personOrPeople(pedOutputObj.noInjuriesByYear[key])) + ' uninjured</div>');
-          }); // end each
+          const counterPedestrianByYear = Utility.sortObjectByKey(pedOutputObj.crashesByYear);
+          $.each(counterPedestrianByYear, (key, value) => {
+           $('#counterPedestrianByYear').append(`<div>${key}: ${Utility.crashOrCrashes(value)} with
+               ${injuryFigure(Utility.personOrPeople(pedOutputObj.injuriesByYear[key]))} injured &
+               ${injuryFigure(Utility.personOrPeople(pedOutputObj.noInjuriesByYear[key]))} uninjured</div>`);
+          });
       }
 
       $('#status').html('');
@@ -56,7 +56,7 @@ import $ from 'jquery';
   /*
   *   Output our crash data in two separate graphs.
   */
-  var outputCrashDataGraph = function outputCrashDataGraph(bikeOutputObj, pedOutputObj) {
+  const outputCrashDataGraph = function outputCrashDataGraph(bikeOutputObj, pedOutputObj) {
       //
       // Output the summary graph (# of total pedestrian injuries, # of total bicycle injuries, total as encap if possible)
       //
@@ -122,14 +122,14 @@ import $ from 'jquery';
       var annualBreakdownObj = {};
 
       if (pedOutputObj !== undefined) {
-          pedOutputObj.injuriesByYear.forEach(function(injuries, year) {
+          pedOutputObj.injuriesByYear.forEach((injuries, year) => {
               var annualBreakdownDetailObj = {bikeInjuries: 0, pedInjuries: injuries};
               annualBreakdownObj[year] = annualBreakdownDetailObj;
           });
       }
 
       if (bikeOutputObj !== undefined) {
-          bikeOutputObj.injuriesByYear.forEach(function(injuries, year) {
+          bikeOutputObj.injuriesByYear.forEach((injuries, year) => {
               var annualBreakdownDetailObj;
               if (annualBreakdownObj[year] instanceof Object) {
                   annualBreakdownDetailObj = annualBreakdownObj[year];
@@ -144,7 +144,7 @@ import $ from 'jquery';
 
       var pedInjuryArr = [];
       var bikeInjuryArr = [];
-      $.each(annualBreakdownObj, function(index, injuryObject) {
+      $.each(annualBreakdownObj, (index, injuryObject) => {
           pedInjuryArr.push(injuryObject.pedInjuries);
           bikeInjuryArr.push(injuryObject.bikeInjuries);
       });
@@ -244,7 +244,7 @@ import $ from 'jquery';
       $('#coords').html(metaDataObj.lat+', '+metaDataObj.lng);
       $('#latitude').html(metaDataObj.lat);
       $('#longitude').html(metaDataObj.lng);
-      $('#permalink').html('<a href="#lat='+metaDataObj.lat+'&lon='+metaDataObj.lng+'&get=yes">Permalink</a>');
+      $('#permalink').html(`<a href="#lat=${metaDataObj.lat}&lon=${metaDataObj.lng}&get=yes">Permalink</a>`);
       $('#metadata-link').show();
   };
 
