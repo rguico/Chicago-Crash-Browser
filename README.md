@@ -31,7 +31,7 @@ All of the data links are in the [Data](DATA.md) page.
 
 Since this is an open source project, you can clone/fork it and build or adapt your own version, for Chicago or anywhere else. After you clone it to your computer, run these commands in the Terminal:
 ````
-npm install && bower install && gulp replaceProd
+npm install && gulp replaceProd
 ````
 Then point your web browser to the `/dist` folder. 
 
