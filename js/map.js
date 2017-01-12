@@ -9,6 +9,8 @@ import 'leaflet.markercluster/dist/leaflet.markercluster-src.js';
 import 'leaflet-plugins/control/Permalink';
 import 'leaflet-draw';
 
+import 'ccb-control';
+
 let lat;
 let lng;
 let map;
@@ -41,11 +43,7 @@ const init = function init() {
         }
     };
 
-    var drawControl = new L.Control.Draw(drawOptions);
-
     map = L.map('map').setView(center, 18);
-    map.addControl(new L.Control.Permalink({useLocation:true}));
-    map.addControl(drawControl);
 
     /* TILE LAYERS */
     var streets = L.tileLayer('https://{s}.tiles.mapbox.com/v3/foursquare.m3elv7vi/{z}/{x}/{y}.png', {
@@ -86,7 +84,11 @@ const init = function init() {
     var otherLayers =  {};
 
     // create a layer control that turns on/off layers
+    map.addControl(new L.Control.CcbControl());
+    map.addControl(new L.Control.Permalink({useLocation:true}));
+    map.addControl(new L.Control.Draw(drawOptions));
     L.control.layers(baseMaps, otherLayers, {collapsed: false, autoZIndex:false}).addTo(map);
+
 
     map.on('click', function(e) {
         $('#address').val('');
