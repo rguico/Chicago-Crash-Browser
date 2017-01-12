@@ -13,7 +13,7 @@ function initDropdown() {
       areas = response;
       const data = [{
         id: '',
-        text: 'None'
+        text: 'Or select an area'
       }, {
         text: 'Neighborhood',
         children: getAreas('neighborhood')

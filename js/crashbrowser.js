@@ -165,16 +165,18 @@ var init = function init() {
         }
     });
 
-    $('button[name="goButton"]').click(() => {
-        saveAddressAndShowCrashes();
-    });
-
     /*
     *   For when someone submits the form using the <enter> key in an input field.
     */
     $('#configForm').submit(evt => {
         evt.preventDefault();
         saveAddressAndShowCrashes();
+    });
+
+    $('#address').on('keyup', e => {
+        if (e.keyCode == 13) {
+            saveAddressAndShowCrashes();
+        }
     });
 
     $('#address').autocomplete({

@@ -8,78 +8,72 @@
 </head>
 <body>
 <div id="body">
-	<div id="instructions"></div>
-	<div id="map"></div>
-	<div id="listContainer">
-		<div id="list">
-			<h1>Chicago Crash Browser</h1>
-			<form name="config" id="configForm">
-				<div id="searchRadiusSelector">
-					<div class="configSet">
-						<div class="configLabel">Search radius:</div>
-						<div class="btn-group" data-toggle="buttons" id="searchRadiusButtons">
-							<label class="btn btn-primary">
-								<input type="radio" name="searchRadius" value="50">50'</input>
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="searchRadius" value="100">100'</input>
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="searchRadius" value="150">150'</input>
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="searchRadius" value="200">200'</input>
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="searchRadius" value="500">500'</input>
-							</label>
-						</div>
-					</div>
-					<div class="configSet">
-						<div class="configLabel">Output type:</div>
-						<div class="btn-group" data-toggle="buttons" id="displaySelection">
-							<label class="btn btn-primary">
-								<input type="radio" name="outputType" value="graph" id="outputGraph">Graph</input>
-							</label>
-							<label class="btn btn-primary">
-								<input type="radio" name="outputType" value="text" id="outputText">Text</input>
-							</label>
-						</div>
-					</div>
-				</div>
-				<div class="configSet">
-					<div class="configLabel"><a href="#" data-toggle="modal" data-target="#address-modal">Chicago Address:</a></div>
-					<div class="input-group ui-widget">
-						<input class="form-control pull" type="text" name="address" id="address" placeholder="121 N La Salle Street" style="width: 80%;"/>
-						<button class="btn btn-default pull-right" type="button" name="goButton">Go</button>
-					</div>
-				</div>
-				<div class="configSet">
-					<div class="configLabel">Area:</div>
-					<div class="input-group ui-widget">
-						<select name="areaSelector" id="areaSelector"></select>
-					</div>
-				</div>
-			</form>
-			<div id="status"></div>
-			<div id="results" style="display: none;">
-				<div id="graphs">
-					<div id="summaryGraph" style="height: 200px;"></div>
-					<div id="breakdownGraph"></div>
-				</div>
-				<div id="counterTotals" style="display:none;">
-					<h3>Bike Crashes: <span id="counterBicyclist"></span></h3>
-					<h4>Total Injuries: <span id="totalBicyclistInjuries"></span></h4>
-					<div id="counterBicyclistByYear"></div>
-					<h3>Pedestrian Crashes: <span id="counterPedestrian"></span></h3>
-					<h4>Total Injuries: <span id="totalPedestrianInjuries"></span></h4>
-					<div id="counterPedestrianByYear"></div>
-					<h3>Radius: <span id="radius"></span> feet</h3>
-					<p class="smaller">Important: These are counts of crashes with that collision type, not the count of how many people were involved. The actual number of crashes involving bicyclists or pedestrians may be higher if the bicyclist or pedestrian was the second or third point of impact.</p>
-				</div>
-			</div>
+	<div class="header">
+		<div class="title">Chicago Crash Browser</div>
+		<div class="configLabel">
+			<input class="form-control" type="text" name="address" id="address" placeholder="Enter a Chicago address"/>
+		</div>
+		<div class="configLabel">
+			<select class="form-control" name="areaSelector" id="areaSelector"></select>
 		</div>
 	</div>
+	<div id="map"></div>
+	<!-- 	<div id="listContainer">
+			<div id="list">
+				<form name="config" id="configForm">
+					<div id="searchRadiusSelector">
+						<div class="configSet">
+							<div class="configLabel">Search radius:</div>
+							<div class="btn-group" data-toggle="buttons" id="searchRadiusButtons">
+								<label class="btn btn-primary">
+									<input type="radio" name="searchRadius" value="50">50'</input>
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="searchRadius" value="100">100'</input>
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="searchRadius" value="150">150'</input>
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="searchRadius" value="200">200'</input>
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="searchRadius" value="500">500'</input>
+								</label>
+							</div>
+						</div>
+						<div class="configSet">
+							<div class="configLabel">Output type:</div>
+							<div class="btn-group" data-toggle="buttons" id="displaySelection">
+								<label class="btn btn-primary">
+									<input type="radio" name="outputType" value="graph" id="outputGraph">Graph</input>
+								</label>
+								<label class="btn btn-primary">
+									<input type="radio" name="outputType" value="text" id="outputText">Text</input>
+								</label>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div id="status"></div>
+				<div id="results" style="display: none;">
+					<div id="graphs">
+						<div id="summaryGraph" style="height: 200px;"></div>
+						<div id="breakdownGraph"></div>
+					</div>
+					<div id="counterTotals" style="display:none;">
+						<h3>Bike Crashes: <span id="counterBicyclist"></span></h3>
+						<h4>Total Injuries: <span id="totalBicyclistInjuries"></span></h4>
+						<div id="counterBicyclistByYear"></div>
+						<h3>Pedestrian Crashes: <span id="counterPedestrian"></span></h3>
+						<h4>Total Injuries: <span id="totalPedestrianInjuries"></span></h4>
+						<div id="counterPedestrianByYear"></div>
+						<h3>Radius: <span id="radius"></span> feet</h3>
+						<p class="smaller">Important: These are counts of crashes with that collision type, not the count of how many people were involved. The actual number of crashes involving bicyclists or pedestrians may be higher if the bicyclist or pedestrian was the second or third point of impact.</p>
+					</div>
+				</div>
+			</div>
+		</div> -->
 
 	<script type="text/javascript">
 

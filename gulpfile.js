@@ -1,16 +1,16 @@
-var gulp = require('gulp');
-var del = require('del');
-var sourcemaps = require('gulp-sourcemaps');
-var concatCss = require('gulp-concat-css');
-var webpack = require('webpack-stream');
-var rsync = require('rsync-slim');
-var secrets = require('./secrets.json');
-var connect = require('gulp-connect');
-var replace = require('gulp-replace');
+let gulp = require('gulp'),
+    del = require('del'),
+    sourcemaps = require('gulp-sourcemaps'),
+    concatCss = require('gulp-concat-css'),
+    webpack = require('webpack-stream'),
+    rsync = require('rsync-slim'),
+    secrets = require('./secrets.json'),
+    connect = require('gulp-connect'),
+    replace = require('gulp-replace');
 
 const outputFolder = 'dist';
 
-gulp.task('css', function () {
+gulp.task('css', () => {
    return gulp.src([
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet.markercluster/dist/MarkerCluster.css',
@@ -30,7 +30,7 @@ gulp.task('images', ['clean'], function () {
     .pipe(gulp.dest(outputFolder + '/images'));
 });
 
-gulp.task('default', ['clean', 'css', 'images'], function () {
+gulp.task('default', ['clean', 'css', 'images'], () => {
 
   gulp.src('api/**/*')
     .pipe(gulp.dest(outputFolder + '/api'));
@@ -59,21 +59,25 @@ gulp.task('clean', () => {
   });
 });
 
-gulp.task('serve', ['clean', 'default'], function () {
+gulp.task('watch', () => {
+  gulp.watch(['js/**/*.js', 'stylesheets/index.css', 'index.html'], ['default'])
+});
+
+gulp.task('serve', ['clean', 'default', 'watch'], () => {
   gulp.src([outputFolder + '/bundle.js'])
     .pipe(replace('@@API_HOST', 'http://www.chicagocrashes.org'))
     .pipe(gulp.dest(outputFolder, {overwrite: true}));
 
-  connect.server({root: 'dist'})
+  connect.server({root: 'dist'});
 });
 
-gulp.task('replaceProd', ['default'], function () {
+gulp.task('replaceProd', ['default'], () => {
   return gulp.src([outputFolder + '/bundle.js'])
     .pipe(replace('@@API_HOST', ''))
     .pipe(gulp.dest(outputFolder, {overwrite: true}));
 })
 
-gulp.task('deploy', ['default', 'replaceProd'], function () {
+gulp.task('deploy', ['default', 'replaceProd'], () => {
   rsync({
     src: outputFolder + '/',
     dest: secrets.username + '@' + secrets.hostname + ':/var/www/chicagocrashes/htdocs',
