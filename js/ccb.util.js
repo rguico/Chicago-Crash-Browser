@@ -15,7 +15,7 @@ const getParam = function getParam(param) {
 };
 
 const getDistance = function getDistance() {
-    return $('input[name="searchRadius"]:checked').val();
+    return $('#searchRadius').val();
 };
 
 /**
