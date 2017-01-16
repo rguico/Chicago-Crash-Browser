@@ -7,7 +7,6 @@
 <meta property="og:image" content="http://chicagocrashes.org/images/chicago_crashes_screenshot.png" />
 </head>
 <body>
-<div id="body">
 	<div class="header">
 		<div class="title">Chicago Crash Browser</div>
 		<div class="configLabel">
@@ -17,77 +16,39 @@
 			<select class="form-control" name="areaSelector" id="areaSelector"></select>
 		</div>
 	</div>
-	<div id="map"></div>
-	<!-- 	<div id="listContainer">
-			<div id="list">
-				<form name="config" id="configForm">
-					<div id="searchRadiusSelector">
-						<div class="configSet">
-							<div class="configLabel">Search radius:</div>
-							<div class="btn-group" data-toggle="buttons" id="searchRadiusButtons">
-								<label class="btn btn-primary">
-									<input type="radio" name="searchRadius" value="50">50'</input>
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="searchRadius" value="100">100'</input>
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="searchRadius" value="150">150'</input>
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="searchRadius" value="200">200'</input>
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="searchRadius" value="500">500'</input>
-								</label>
-							</div>
-						</div>
-						<div class="configSet">
-							<div class="configLabel">Output type:</div>
-							<div class="btn-group" data-toggle="buttons" id="displaySelection">
-								<label class="btn btn-primary">
-									<input type="radio" name="outputType" value="graph" id="outputGraph">Graph</input>
-								</label>
-								<label class="btn btn-primary">
-									<input type="radio" name="outputType" value="text" id="outputText">Text</input>
-								</label>
-							</div>
-						</div>
-					</div>
-				</form>
-				<div id="status"></div>
-				<div id="results" style="display: none;">
-					<div id="graphs">
-						<div id="summaryGraph" style="height: 200px;"></div>
-						<div id="breakdownGraph"></div>
-					</div>
-					<div id="counterTotals" style="display:none;">
-						<h3>Bike Crashes: <span id="counterBicyclist"></span></h3>
-						<h4>Total Injuries: <span id="totalBicyclistInjuries"></span></h4>
-						<div id="counterBicyclistByYear"></div>
-						<h3>Pedestrian Crashes: <span id="counterPedestrian"></span></h3>
-						<h4>Total Injuries: <span id="totalPedestrianInjuries"></span></h4>
-						<div id="counterPedestrianByYear"></div>
-						<h3>Radius: <span id="radius"></span> feet</h3>
-						<p class="smaller">Important: These are counts of crashes with that collision type, not the count of how many people were involved. The actual number of crashes involving bicyclists or pedestrians may be higher if the bicyclist or pedestrian was the second or third point of impact.</p>
-					</div>
-				</div>
+
+	<div id="body">
+		<div id="map"></div>
+		<div id="results">
+			<div id="graphs">
+				<div id="summaryGraph"></div>
+				<div id="breakdownGraph"></div>
 			</div>
-		</div> -->
+			<div id="counterTotals" style="display:none;">
+				<h3>Bike Crashes: <span id="counterBicyclist"></span></h3>
+				<h4>Total Injuries: <span id="totalBicyclistInjuries"></span></h4>
+				<div id="counterBicyclistByYear"></div>
+				<h3>Pedestrian Crashes: <span id="counterPedestrian"></span></h3>
+				<h4>Total Injuries: <span id="totalPedestrianInjuries"></span></h4>
+				<div id="counterPedestrianByYear"></div>
+				<h3>Radius: <span id="radius"></span> feet</h3>
+				<p class="smaller">Important: These are counts of crashes with that collision type, not the count of how many people were involved. The actual number of crashes involving bicyclists or pedestrians may be higher if the bicyclist or pedestrian was the second or third point of impact.</p>
+			</div>
+		</div>
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-38676032-1']);
-	  _gaq.push(['_trackPageview']);
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-38676032-1']);
+		  _gaq.push(['_trackPageview']);
 
-	  (function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	</script>
-</div>
+		  (function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	</div>
 
 <div id="about" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm">

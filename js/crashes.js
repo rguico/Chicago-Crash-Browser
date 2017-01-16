@@ -17,7 +17,7 @@ var summary;
 *          layer: If polygon, the layer that was created
 */
 function getCrashes(opts) {
-    $('#results').hide();
+    $('#body').removeClass('results-open');
     $('#metadata-link').hide();
     var fn;
     if (!opts || opts.areaType === 'circle') {
@@ -123,6 +123,7 @@ function hasCrashes() {
 *   loaded from the API.
 */
 var generateSummaries = function generateSummaries(crashes) {
+  $('#body').addClass('results-open');
   summary = {};
 
   if(crashes.length > 0) {

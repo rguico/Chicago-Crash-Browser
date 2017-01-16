@@ -22,8 +22,6 @@ import $ from 'jquery';
   *   Outputs the textual representation of crashes located in a given distance.
   */
   const outputCrashDataText = function outputCrashDataText(bikeOutputObj, pedOutputObj) {
-      $('#results').show();
-
       if (bikeOutputObj !== undefined) {
           $('#counterBicyclist').html(bikeOutputObj.crashes);
           $('#counterBicyclistByYear').html('');

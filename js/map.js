@@ -4,6 +4,7 @@
 import $ from 'jquery';
 import * as Utility from 'ccb.util';
 import L from 'leaflet';
+import _ from 'lodash';
 
 import 'leaflet.markercluster/dist/leaflet.markercluster-src.js';
 import 'leaflet-plugins/control/Permalink';
@@ -154,7 +155,7 @@ var getCrashDetails = function getCrashDetails(feature) {
 *   Removes marker group and circle from the map.
 */
 var clearAreas = function clearAreas() {
-    $('#results').hide();
+    $('#body').removeClass('results-open');
     markerGroup.clearLayers();
     if (typeof circle !== 'undefined') {
         map.removeLayer(circle);
