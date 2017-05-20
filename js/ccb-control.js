@@ -34,7 +34,7 @@ L.Control.CcbControl = L.Control.extend({
     this.radiusSelect = L.DomUtil.create('select', 'form-control input-sm', group);
     this.radiusSelect.id = 'searchRadius';
     this.radiusSelect.name = 'searchRadius';
-    for (let radius of [50, 100, 150, 200, 500]) {
+    for (let radius of [150, 250, 600]) {
       let select = L.DomUtil.create('option', null, this.radiusSelect);
       select.textContent = radius;
     }
