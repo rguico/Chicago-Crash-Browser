@@ -10,14 +10,14 @@ The Chicago Crash Browser is an interface for the automobile crash data from the
 > The Division of Traffic Safety requires the following statement be placed on any work product that incorporates or references our data. 
 DISCLAIMER: The motor vehicle crash data referenced herein was provided by the Illinois Department of Transportation. The author is responsible for any data analyses and conclusions drawn.
 
-##Purpose
+## Purpose
 The purpose of the Crash Browser is two fold:
 
 1. Give planners, politicians, and policy makers the tools and information they need to make good decisions and prioritization about where to make investments about transportation safety. 
+1. Give activists and advocates the information they need to demand change in the transportation system in the most effective way. 
+1. Provide an opportunity for JavaScript developers and designers to contribute to an open-source project that benefits the community.
 
-2. Give activists and advocates the information they need to demand change in the transportation system in the most effective way. 
-
-##Data
+## Data
 The Chicago Crash Browser uses only one of the three tables the state provides, called "CrashExtract". It's called this because the crash data is an extract from the entire database, extracted by year and city. Whenever the whole state was provided, all cities except Chicago ("City Code" != 1051) were stripped and uploaded to a PostgreSQL PostGIS-enabled database. 
 
 ### Get the data
@@ -30,13 +30,20 @@ All of the data links are in the [Data](DATA.md) page.
 ## Installation
 
 Since this is an open source project, you can clone/fork it and build or adapt your own version, for Chicago or anywhere else. After you clone it to your computer, run these commands in the Terminal:
+
 ````
 npm install && gulp replaceProd
 ````
+
 Then point your web browser to the `/dist` folder. 
 
+## Developer's Guide
 
-##API
+* [Developer's Guide](developersdevelopersdevelopers.md)
+
+Specific documentation for wannabe developers!
+
+## API
 The API returns JSON and has the following GET parameters:
 * distance (in feet). This is capped at 1,000 feet. 
 * north, south, east, west (to create a bounding box inserted as a WHERE statement to reduce the dataset search time)
@@ -52,7 +59,7 @@ In the webpage, the bounds are obtained via Leaflet.
 
 The records' WGS84 (EPSG:4326) coordinates are converted to EPSG:3436 (Illinois StatePlane West feet) to be able to search distance in feet (this may not be the best method). This is the data's original projection although the records' WGS84 coordinates (provided by the data author) are the actual fields used.
 
-##History
+## History
 * First Chicago bike crash map created in February 2011
 * Derek Eder created an enhanced version a bit later
 * Lots of press for the Chicago bike crash map in 2011
@@ -63,7 +70,7 @@ The records' WGS84 (EPSG:4326) coordinates are converted to EPSG:3436 (Illinois 
 * Follow [@stevevance](http://twitter.com/stevevance) on Twitter
 * Sign up for the rarely-issued [e-blasts on TinyLetter](https://tinyletter.com/chicagocrashes)
 
-##Credits
+## Credits
 * Michael Carney and Sebastian Lew (who got me interested in automobile crash data in the first place after they asked if I had it)
 * Richard Lee who made the first social edits via GitHub
 * Robert Guico who installed Bower (for dependencies) and cleaned up a lot of the JavaScript
@@ -79,5 +86,5 @@ The records' WGS84 (EPSG:4326) coordinates are converted to EPSG:3436 (Illinois 
 * Smart Chicago Collaborative for hosting the site
 * Everyone who appreciates this work.
 
-##Cities outside Chicago##
+## Cities outside Chicago
 I have no plans to include cities outside Chicago because of the amount of work it takes cleaning up the state's data.
