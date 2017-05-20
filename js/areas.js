@@ -35,7 +35,7 @@ function initDropdown() {
               method: 'boundary',
               place: e.params.data.id
             }
-          }).then(function (geoJsonRaw) {
+          }).then(geoJsonRaw => {
             map.clearAreas();
             map.setPoly(L.GeoJSON.geometryToLayer(geoJsonRaw.features[0]));
             $('body').trigger('search', {

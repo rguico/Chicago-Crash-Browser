@@ -110,21 +110,13 @@ var init = function init() {
         }
     }
 
-    // When there isn't a searchRadius cookie, default to 150.
-    if (Cookies.get('searchRadius') === undefined) {
-        $('input[name="searchRadius"][value="150"]').prop('checked', true).parent().addClass('active');
-        Cookies.set('searchRadius', '150');
-    } else {
-        var searchRadius = Cookies.get('searchRadius');
-        $('input[name="searchRadius"][value="' + searchRadius + '"]').prop('checked', true).parent().addClass('active');
-    }
-
     // Load stored addresses
     if (localStorage.getItem('ccb.addresses')) {
         setAddresses(JSON.parse(localStorage.getItem('ccb.addresses')));
     }
 
     $('body').on('search', (event, opts) => {
+        $('#body').addClass('results-open');
         if (!opts) {
             opts = { areaType: 'circle' };
         }

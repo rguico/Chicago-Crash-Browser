@@ -33,10 +33,11 @@ body, html {
 #body.results-open #map,
 #body.results-open #results {
 	width: 50%;
+	display: block;
 }
 
 #results {
-	width: 0;
+	display: none;
 	float: left;
 }
 

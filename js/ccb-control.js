@@ -1,6 +1,8 @@
 'use strict';
 
 import L from 'leaflet';
+import * as Cookies from 'js-cookie';
+import $ from 'jquery';
 
 function setDimensions(container, width, height) {
   container.style.width = width;
@@ -31,6 +33,7 @@ L.Control.CcbControl = L.Control.extend({
     this.label.textContent = 'Search Radius (m)';
     this.radiusSelect = L.DomUtil.create('select', 'form-control input-sm', group);
     this.radiusSelect.id = 'searchRadius';
+    this.radiusSelect.name = 'searchRadius';
     for (let radius of [50, 100, 150, 200, 500]) {
       let select = L.DomUtil.create('option', null, this.radiusSelect);
       select.textContent = radius;
@@ -53,6 +56,16 @@ L.Control.CcbControl = L.Control.extend({
     container.onclick = e => {
       console.log('buttonClicked');
     }
+
+    // When there isn't a searchRadius cookie, default to 150.
+    if (Cookies.get('searchRadius') === undefined) {
+        $('input[name="searchRadius"][value="150"]').prop('checked', true).parent().addClass('active');
+        Cookies.set('searchRadius', '150');
+    } else {
+        var searchRadius = Cookies.get('searchRadius');
+        $(`input[name="searchRadius"][value="${searchRadius}"]`).prop('checked', true).parent().addClass('active');
+    }
+
 
     return container;
   }

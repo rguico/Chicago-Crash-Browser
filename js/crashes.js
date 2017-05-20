@@ -123,7 +123,6 @@ function hasCrashes() {
 *   loaded from the API.
 */
 var generateSummaries = function generateSummaries(crashes) {
-  $('#body').addClass('results-open');
   summary = {};
 
   if(crashes.length > 0) {
