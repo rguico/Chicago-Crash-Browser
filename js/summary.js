@@ -63,7 +63,7 @@ import $ from 'jquery';
               type: 'bar'
           },
           title: {
-              text: 'Injury summary (2009-2014)'
+              text: 'Injury summary (2009-2015)'
           },
           xAxis: {
               categories: ['Injuries', 'Fatalities']
