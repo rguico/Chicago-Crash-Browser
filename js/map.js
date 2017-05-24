@@ -2,7 +2,7 @@
 'use strict';
 
 import $ from 'jquery';
-import * as Utility from 'ccb.util';
+import * as Utility from './ccb.util';
 import L from 'leaflet';
 import _ from 'lodash';
 
@@ -10,7 +10,7 @@ import 'leaflet.markercluster/dist/leaflet.markercluster-src.js';
 import 'leaflet-plugins/control/Permalink';
 import 'leaflet-draw';
 
-import 'ccb-control';
+import './ccb-control';
 
 let lat;
 let lng;

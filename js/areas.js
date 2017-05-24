@@ -3,7 +3,7 @@
 
 import $ from 'jquery';
 import _ from 'lodash';
-import * as map from 'map';
+import * as map from './map';
 
 var areas;
 

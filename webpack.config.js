@@ -1,5 +1,5 @@
-var path = require("path");
-var webpack = require("webpack");
+const path = require('path'),
+      webpack = require('webpack');
 
 module.exports = {
   context: __dirname + '/js',
@@ -9,24 +9,22 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-      root: [
-        path.join(__dirname, 'node_modules'),
-        path.join(__dirname, 'js')
-      ]
+    modules: [
+      path.join(__dirname, 'node_modules'),
+      path.join(__dirname, 'js')
+    ]
   },
   plugins: [
-      new webpack.ResolverPlugin(
-          new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-      ),
-      new webpack.ProvidePlugin({
-        jQuery: 'jquery'
-      })
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery'
+    })
   ],
   module: {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
           presets: ['es2015']

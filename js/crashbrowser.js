@@ -12,13 +12,12 @@ import 'jquery-ui/ui/widgets/menu';
 import 'jquery-ui/ui/widgets/autocomplete';
 
 import 'select2';
-import 'bootstrap';
 
-import * as Utility from 'ccb.util';
-import * as crashes from 'crashes';
-import * as map from 'map';
-import * as summary from 'summary';
-import * as areas from 'areas';
+import * as Utility from './ccb.util';
+import * as crashes from './crashes';
+import * as map from './map';
+import * as summary from './summary';
+import * as areas from './areas';
 
 var addresses = [];
 
@@ -185,7 +184,7 @@ var init = function init() {
         $('body').trigger('search');
     }
 
-    $('.btn').button();
+    // $('.btn').button();
 
     areas.initDropdown();
 

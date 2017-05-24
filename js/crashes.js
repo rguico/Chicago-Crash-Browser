@@ -1,9 +1,9 @@
 /* global define */
 'use strict';
 
-import * as Utility from 'ccb.util';
-import * as map from 'map';
-import * as s from 'summary';
+import * as Utility from './ccb.util';
+import * as map from './map';
+import * as s from './summary';
 import $ from 'jquery';
 
 var summary;

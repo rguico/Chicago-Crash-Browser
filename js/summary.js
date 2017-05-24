@@ -2,7 +2,7 @@
 'use strict';
 
 import Highcharts from 'highcharts/highcharts.src.js';
-import * as Utility from 'ccb.util';
+import * as Utility from './ccb.util';
 import $ from 'jquery';
 
   /**
