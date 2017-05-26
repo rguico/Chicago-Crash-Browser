@@ -37,7 +37,7 @@ function initDropdown() {
             }
           }).then(geoJsonRaw => {
             map.clearAreas();
-            map.setPoly(L.GeoJSON.geometryToLayer(geoJsonRaw.features[0]));
+            map.setPoly(L.polygon(geoJsonRaw.features[0].geometry.coordinates));
             $('body').trigger('search', {
               areaType: 'polygon'
             });

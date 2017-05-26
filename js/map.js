@@ -232,15 +232,15 @@ var getAPIUrlForPoly = function getAPIUrlForPoly() {
 
     var coords = '';
     var latLngs = poly.getLatLngs();
-    if (_.isArray(latLngs[0])) {
-        latLngs = latLngs[0];
+    if (_.isArray(latLngs[0][0])) {
+        latLngs = latLngs[0][0];
     }
     latLngs.forEach(coord => {
-        coords += coord.lng + ' ' + coord.lat + ',';
+        coords += `${coord.lat} ${coord.lng},`;
     });
     // Append last point
     var lastPoint = latLngs[0];
-    coords += lastPoint.lng + ' ' + lastPoint.lat;
+    coords += `${lastPoint.lat} ${lastPoint.lng}`;
 
     return `${API_HOST}/api.php?coords=${coords}`;
 };
