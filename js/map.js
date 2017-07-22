@@ -137,7 +137,7 @@ var setCoordinates = function setCoordinates(newLat, newLng) {
 */
 var getCrashDetails = function getCrashDetails(feature) {
     var type = null;
-    if(feature.collType == Utility.CollisionEnum.PEDESTRIAN) {
+    if (feature.collType == Utility.CollisionEnum.PEDESTRIAN) {
         type = 'Pedestrian Crash';
     } else if(feature.collType == Utility.CollisionEnum.BICYCLIST) {
         type = 'Bicycle Crash';
@@ -232,15 +232,15 @@ var getAPIUrlForPoly = function getAPIUrlForPoly() {
 
     var coords = '';
     var latLngs = poly.getLatLngs();
-    if (_.isArray(latLngs[0][0])) {
-        latLngs = latLngs[0][0];
+    if (_.isArray(latLngs[0])) {
+        latLngs = latLngs[0];
     }
-    latLngs.forEach(coord => {
-        coords += `${coord.lat} ${coord.lng},`;
+    latLngs.forEach(({lat, lng}) => {
+        coords += `${lng} ${lat},`;
     });
     // Append last point
     var lastPoint = latLngs[0];
-    coords += `${lastPoint.lat} ${lastPoint.lng}`;
+    coords += `${lastPoint.lng} ${lastPoint.lat}`;
 
     return `${API_HOST}/api.php?coords=${coords}`;
 };
