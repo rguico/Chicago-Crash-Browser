@@ -32,5 +32,10 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    alias: {
+      jquery: "jquery/src/jquery",
+    }
+  },
   devtool: 'source-map'
 };

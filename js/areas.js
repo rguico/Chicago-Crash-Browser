@@ -1,7 +1,6 @@
 /* global define, L */
 'use strict';
 
-import $ from 'jquery';
 import _ from 'lodash';
 import * as map from './map';
 

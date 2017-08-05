@@ -1,7 +1,6 @@
 /* global define, L */
 'use strict';
 
-import $ from 'jquery';
 import * as Utility from './ccb.util';
 import L from 'leaflet';
 import _ from 'lodash';

@@ -3,7 +3,6 @@
 'use strict';
 
 import * as Cookies from 'js-cookie';
-import $ from 'jquery';
 
 import 'jquery-ui/ui/core';
 import 'jquery-ui/ui/widget';
@@ -12,6 +11,8 @@ import 'jquery-ui/ui/widgets/menu';
 import 'jquery-ui/ui/widgets/autocomplete';
 
 import 'select2';
+
+import 'bootstrap/dist/js/bootstrap';
 
 import * as Utility from './ccb.util';
 import * as crashes from './crashes';

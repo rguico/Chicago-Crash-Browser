@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import URI from 'urijs';
 import _ from 'lodash';
 

@@ -2,7 +2,6 @@
 
 import L from 'leaflet';
 import * as Cookies from 'js-cookie';
-import $ from 'jquery';
 
 function setDimensions(container, width, height) {
   container.style.width = width;
